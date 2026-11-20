@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register | Smart Project Planner</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <!-- Left Hero Column -->
+    <div class="auth-hero">
+      <a href="/" class="brand-logo">
+        <div class="brand-icon">⚡</div>
+        <span>Smart Project Planner</span>
+      </a>
+
+      <div class="auth-hero-content">
+        <div class="hero-pill" style="margin-bottom: 1.25rem;">
+          <span>Tenant Onboarding</span>
+        </div>
+        <h1 class="auth-hero-title">Start your high-performance workspace.</h1>
+        <p class="auth-hero-desc">
+          Register a new organization as an Administrator or join an existing company team using your organization's unique code.
+        </p>
+
+        <ul class="auth-features-list">
+          <li class="auth-feature-item">
+            <span class="auth-check-icon">✓</span>
+            <span>Instant company provisioning with ACID transactional safety</span>
+          </li>
+          <li class="auth-feature-item">
+            <span class="auth-check-icon">✓</span>
+            <span>Assign teammates into Admin, Manager, HR, or Employee roles</span>
+          </li>
+          <li class="auth-feature-item">
+            <span class="auth-check-icon">✓</span>
+            <span>Autonomous background SLA monitoring across all projects</span>
+          </li>
+        </ul>
+      </div>
+
+      <div style="font-size: 0.8rem; color: var(--text-muted);">
+        Enterprise Multi-Tenancy Architecture • Smart Project Planner
+      </div>
+    </div>
+
+    <!-- Right Form Column -->
+    <div class="auth-form-container">
+      <div class="glass-card auth-card">
+        
+        <!-- Registration Mode Switcher Tabs -->
+        <div class="auth-tabs">
+          <button type="button" id="tabCompanyBtn" class="auth-tab-btn active" onclick="switchRegisterTab('company')">
+            Register Company (Admin)
+          </button>
+          <button type="button" id="tabEmployeeBtn" class="auth-tab-btn" onclick="switchRegisterTab('employee')">
+            Join as Employee
+          </button>
+        </div>
+
+        <!-- FORM 1: Register New Company (Admin Account) -->
+        <div id="companyFormSection">
+          <div class="auth-header">
+            <h2 class="auth-title">Create New Organization</h2>
+            <p class="auth-subtitle">Sets up your company tenant & admin account</p>
+          </div>
+
+          <form id="registerCompanyForm" onsubmit="handleCompanyRegisterSubmit(event)">
+            <div class="form-group">
+              <label class="form-label" for="regCompanyName">Company Name</label>
+              <input type="text" id="regCompanyName" class="form-control" placeholder="e.g. Acme Technologies" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regCompanyCode">Company Code (Unique ID)</label>
+              <input type="text" id="regCompanyCode" class="form-control" placeholder="e.g. ACME-TECH" style="text-transform: uppercase;" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regAdminUsername">Admin Username</label>
+              <input type="text" id="regAdminUsername" class="form-control" placeholder="e.g. alex_admin" required autocomplete="username">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regAdminEmail">Admin Email</label>
+              <input type="email" id="regAdminEmail" class="form-control" placeholder="alex@company.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="regAdminPassword">Password</label>
+              <input type="password" id="regAdminPassword" class="form-control" placeholder="At least 6 characters" minlength="6" required autocomplete="new-password">
+            </div>
+
+            <button type="submit" id="regCompanyBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+              <span>Register Company & Enter Workspace</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- FORM 2: Join as Employee (Existing Company) -->
+        <div id="employeeFormSection" style="display: none;">
+          <div class="auth-header">
+            <h2 class="auth-title">Join Existing Company</h2>
+            <p class="auth-subtitle">Use the unique code provided by your administrator</p>
+          </div>
+
+          <form id="registerEmployeeForm" onsubmit="handleEmployeeRegisterSubmit(event)">
+            <div class="form-group">
+              <label class="form-label" for="empCompanyCode">Company Code</label>
+              <input type="text" id="empCompanyCode" class="form-control" placeholder="e.g. ACME-2026 or NEXUS-99" style="text-transform: uppercase;" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="empUsername">Username</label>
+              <input type="text" id="empUsername" class="form-control" placeholder="e.g. maya_dev" required autocomplete="username">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="empEmail">Work Email</label>
+              <input type="email" id="empEmail" class="form-control" placeholder="maya@company.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="empPassword">Password</label>
+              <input type="password" id="empPassword" class="form-control" placeholder="At least 6 characters" minlength="6" required autocomplete="new-password">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="empRole">Initial Requested Role</label>
+              <select id="empRole" class="form-control">
+                <option value="EMPLOYEE" selected>Employee (Default)</option>
+                <option value="MANAGER">Project Manager</option>
+                <option value="HR">Human Resources (HR)</option>
+              </select>
+            </div>
+
+            <button type="submit" id="regEmpBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+              <span>Join Workspace</span>
+            </button>
+          </form>
+        </div>
+
+        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+          Already registered? <a href="/login" style="color: var(--accent-teal); font-weight: 500;">Sign In</a>
+        </p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

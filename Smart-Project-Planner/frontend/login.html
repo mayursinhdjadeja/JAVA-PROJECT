@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | Smart Project Planner</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="auth-wrapper">
+    <!-- Left Hero Column -->
+    <div class="auth-hero">
+      <a href="/" class="brand-logo">
+        <div class="brand-icon">⚡</div>
+        <span>Smart Project Planner</span>
+      </a>
+
+      <div class="auth-hero-content">
+        <div class="hero-pill" style="margin-bottom: 1.25rem;">
+          <span>Secure Enterprise Access</span>
+        </div>
+        <h1 class="auth-hero-title">Experience Linear-fast project planning.</h1>
+        <p class="auth-hero-desc">
+          Sign in to access your company workspace, manage sprints, and collaborate with your team in real time.
+        </p>
+
+        <ul class="auth-features-list">
+          <li class="auth-feature-item">
+            <span class="auth-check-icon">✓</span>
+            <span>Zero cross-tenant data leakage with strict company codes</span>
+          </li>
+          <li class="auth-feature-item">
+            <span class="auth-check-icon">✓</span>
+            <span>Role-Based Access Control (Admin, Manager, HR, Employee)</span>
+          </li>
+          <li class="auth-feature-item">
+            <span class="auth-check-icon">✓</span>
+            <span>Groq AI auto-generation for actionable task descriptions</span>
+          </li>
+        </ul>
+      </div>
+
+      <div style="font-size: 0.8rem; color: var(--text-muted);">
+        Smart Project Planner Enterprise • 2026 Edition
+      </div>
+    </div>
+
+    <!-- Right Form Column -->
+    <div class="auth-form-container">
+      <div class="glass-card auth-card">
+        <div class="auth-header">
+          <h2 class="auth-title">Welcome back</h2>
+          <p class="auth-subtitle">Enter your credentials to enter your workspace</p>
+        </div>
+
+        <form id="loginForm" onsubmit="handleLoginSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="loginUsername">Username</label>
+            <input type="text" id="loginUsername" class="form-control" placeholder="e.g. alex_admin" required autocomplete="username">
+          </div>
+
+          <div class="form-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="form-label" for="loginPassword">Password</label>
+              <button type="button" onclick="togglePasswordVisibility('loginPassword', this)" style="background:none; border:none; color:var(--text-muted); font-size:0.75rem; cursor:pointer;">Show</button>
+            </div>
+            <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+          </div>
+
+          <button type="submit" id="loginBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
+            <span>Sign In to Workspace</span>
+          </button>
+        </form>
+
+        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-secondary);">
+          Don't have an account? <a href="/register" style="color: var(--accent-teal); font-weight: 500;">Create or join company</a>
+        </p>
+
+        <!-- Quick Demo Fill Pills for Testing -->
+        <div class="quick-accounts">
+          <div class="quick-title">Quick Demo Logins (Password: Admin@123)</div>
+          <div class="quick-pills">
+            <button type="button" class="quick-pill" onclick="fillCredentials('alex_admin', 'Admin@123')">
+              <strong>alex_admin</strong> (Admin)
+            </button>
+            <button type="button" class="quick-pill" onclick="fillCredentials('sarah_pm', 'Admin@123')">
+              <strong>sarah_pm</strong> (Manager)
+            </button>
+            <button type="button" class="quick-pill" onclick="fillCredentials('dev_david', 'Admin@123')">
+              <strong>dev_david</strong> (Employee)
+            </button>
+            <button type="button" class="quick-pill" onclick="fillCredentials('nexus_admin', 'Admin@123')">
+              <strong>nexus_admin</strong> (Tenant 2)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

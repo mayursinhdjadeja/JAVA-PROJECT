@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Project Planner | Enterprise Multi-Tenant SaaS</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <a href="/" class="brand-logo">
+      <div class="brand-icon">⚡</div>
+      <span>Smart Project Planner</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features" class="nav-link">Features</a></li>
+      <li><a href="#mockup" class="nav-link">Workspace</a></li>
+      <li><a href="#tech" class="nav-link">Architecture</a></li>
+      <li><a href="/login" class="btn btn-secondary btn-sm">Log In</a></li>
+      <li><a href="/register" class="btn btn-primary btn-sm">Get Started</a></li>
+    </ul>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero">
+      <div class="hero-pill">
+        <span>✨ Powered by Core Java & Groq Cloud AI</span>
+      </div>
+      <h1 class="hero-title">High-Velocity Project Planning for Modern Engineering Teams</h1>
+      <p class="hero-subtitle">
+        Enterprise-grade multi-tenant project management with strict company data isolation, 
+        role-based permissions, intelligent Groq AI task synthesis, and an ultra-fast Kanban workflow.
+      </p>
+      <div class="hero-actions">
+        <a href="/register" class="btn btn-primary">Start Company Workspace</a>
+        <a href="/login" class="btn btn-secondary">Open Live Demo</a>
+      </div>
+
+      <!-- Floating CSS Kanban Mockup -->
+      <div id="mockup" class="mockup-container">
+        <div class="mockup-inner">
+          <div class="mockup-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span class="mockup-title">smart-planner.internal // acme-tech [ACME-2026]</span>
+          </div>
+          <div class="mockup-body">
+            <!-- Col 1: To Do -->
+            <div class="mock-col">
+              <div class="mock-col-header">
+                <span>To Do</span>
+                <span class="col-count">2</span>
+              </div>
+              <div class="mock-card">
+                <div class="badge priority-high" style="margin-bottom: 0.4rem;"><span class="badge-dot"></span>HIGH</div>
+                <div class="mock-card-title">Setup Zero-Downtime DB Replication</div>
+                <div class="mock-card-meta">
+                  <span>Cloud Migration</span>
+                  <span>Due Mar 25</span>
+                </div>
+              </div>
+              <div class="mock-card">
+                <div class="badge priority-medium" style="margin-bottom: 0.4rem;"><span class="badge-dot"></span>MEDIUM</div>
+                <div class="mock-card-title">Audit API Rate Limits & Auth Gates</div>
+                <div class="mock-card-meta">
+                  <span>Security Core</span>
+                  <span>Due Apr 02</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Col 2: In Progress -->
+            <div class="mock-col">
+              <div class="mock-col-header">
+                <span>In Progress</span>
+                <span class="col-count">2</span>
+              </div>
+              <div class="mock-card" style="border-left: 2px solid var(--accent-indigo);">
+                <div class="badge priority-critical" style="margin-bottom: 0.4rem;"><span class="badge-dot"></span>CRITICAL</div>
+                <div class="mock-card-title">Terraform Multi-AZ Cluster Provisioning</div>
+                <div class="mock-card-meta">
+                  <span>Sarah PM</span>
+                  <span>Due Tomorrow</span>
+                </div>
+              </div>
+              <div class="mock-card" style="border-left: 2px solid var(--accent-indigo);">
+                <div class="badge priority-medium" style="margin-bottom: 0.4rem;"><span class="badge-dot"></span>MEDIUM</div>
+                <div class="mock-card-title">✨ Groq LLaMA-3 Prompt Pipeline Integration</div>
+                <div class="mock-card-meta">
+                  <span>AI Portal</span>
+                  <span>Due Apr 05</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Col 3: Done -->
+            <div class="mock-col">
+              <div class="mock-col-header">
+                <span>Done</span>
+                <span class="col-count">3</span>
+              </div>
+              <div class="mock-card" style="border-left: 2px solid var(--accent-teal);">
+                <div class="badge priority-low" style="margin-bottom: 0.4rem;"><span class="badge-dot"></span>LOW</div>
+                <div class="mock-card-title">Vercel & Linear Dark UI Design System</div>
+                <div class="mock-card-meta">
+                  <span>Completed</span>
+                  <span>✓ 100%</span>
+                </div>
+              </div>
+              <div class="mock-card" style="border-left: 2px solid var(--accent-teal);">
+                <div class="badge priority-high" style="margin-bottom: 0.4rem;"><span class="badge-dot"></span>HIGH</div>
+                <div class="mock-card-title">Database Transactional Registration Flow</div>
+                <div class="mock-card-meta">
+                  <span>Completed</span>
+                  <span>✓ 100%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+      <div class="section-header">
+        <h2 class="section-title">Built for Performance and Precision</h2>
+        <p class="section-desc">Engineered from the ground up in pure Core Java without bloated frameworks.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="glass-card feature-box">
+          <div class="feature-icon">🏢</div>
+          <h3 class="feature-title">Multi-Tenant Isolation</h3>
+          <p class="feature-text">
+            Strict tenant boundaries enforce total data privacy between companies. Every project, task, and team member belongs to a unique company code.
+          </p>
+        </div>
+
+        <div class="glass-card feature-box">
+          <div class="feature-icon rbac">🛡️</div>
+          <h3 class="feature-title">Role-Based Access Control (RBAC)</h3>
+          <p class="feature-text">
+            Granular permissions for Admins, Project Managers, HR, and Employees. Control project creation, task assignment, role promotion, and deletion.
+          </p>
+        </div>
+
+        <div class="glass-card feature-box">
+          <div class="feature-icon ai">✨</div>
+          <h3 class="feature-title">Groq AI Task Synthesis</h3>
+          <p class="feature-text">
+            Auto-generate technical scopes, acceptance criteria checklists, and subtasks in seconds using the ultra-fast Groq LLaMA-3 Cloud API.
+          </p>
+        </div>
+
+        <div class="glass-card feature-box">
+          <div class="feature-icon">📋</div>
+          <h3 class="feature-title">Interactive Kanban Board</h3>
+          <p class="feature-text">
+            Fluid drag-and-drop task movement across To Do, In Progress, and Done columns with instant state synchronization and priority badges.
+          </p>
+        </div>
+
+        <div class="glass-card feature-box">
+          <div class="feature-icon">⏱️</div>
+          <h3 class="feature-title">24/7 SLA Watchdog Daemon</h3>
+          <p class="feature-text">
+            Background multithreaded worker periodically monitors overdue deadlines across all tenants and logs SLA alerts automatically.
+          </p>
+        </div>
+
+        <div class="glass-card feature-box">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Zero Dependency Core</h3>
+          <p class="feature-text">
+            Blazing fast startup in under 500ms using native JDK HttpServer, custom manual JSON parsing, and zero external framework overhead.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture & Tech Stack Showcase -->
+    <section id="tech" class="features-section" style="padding-top: 2rem;">
+      <div class="section-header">
+        <h2 class="section-title">Clean Architecture & Pure Stack</h2>
+        <p class="section-desc">Every layer built with precision to ensure maximum speed and zero security vulnerabilities.</p>
+      </div>
+
+      <div class="glass-card" style="padding: 2.5rem; text-align: left; max-width: 900px; margin: 0 auto;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+          <div>
+            <h4 style="color: var(--accent-teal); margin-bottom: 0.5rem; font-family: var(--font-mono);">BACKEND</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+              • Pure Java 25<br>
+              • com.sun.net.httpserver<br>
+              • Manual JSON Parser<br>
+              • Multithreaded Executor
+            </p>
+          </div>
+          <div>
+            <h4 style="color: var(--accent-cyan); margin-bottom: 0.5rem; font-family: var(--font-mono);">DATABASE</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+              • MySQL 8.x via JDBC<br>
+              • ACID Transactions<br>
+              • PreparedStatement Only<br>
+              • Complex Multi-Table JOINs
+            </p>
+          </div>
+          <div>
+            <h4 style="color: var(--accent-indigo); margin-bottom: 0.5rem; font-family: var(--font-mono);">FRONTEND</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+              • Vanilla HTML5 & CSS3<br>
+              • Modern ES6+ JavaScript<br>
+              • Glassmorphism Design<br>
+              • Native Drag & Drop API
+            </p>
+          </div>
+          <div>
+            <h4 style="color: var(--accent-amber); margin-bottom: 0.5rem; font-family: var(--font-mono);">AI & DAEMONS</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">
+              • Groq Cloud API<br>
+              • java.net.http.HttpClient<br>
+              • SLA Watchdog Daemon<br>
+              • SHA-256 Hashing
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer style="padding: 3rem 2rem; border-top: 1px solid var(--border-subtle); margin-top: 4rem; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+    <div style="display: flex; justify-content: center; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;">
+      <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #00e599;"></span>
+      <span>All Systems Operational • Smart Project Planner v2.0</span>
+    </div>
+    <p>© 2026 Smart Project Planner Inc. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

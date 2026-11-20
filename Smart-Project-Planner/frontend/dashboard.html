@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workspace Dashboard | Smart Project Planner</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="dashboard-layout">
+    <!-- Left Dark Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <a href="/" class="brand-logo">
+          <div class="brand-icon">⚡</div>
+          <span>Smart Planner</span>
+        </a>
+
+        <!-- Multi-Tenant Organization Info Badge -->
+        <div class="tenant-badge">
+          <div>
+            <div class="tenant-name" id="sidebarCompanyName">Acme Technologies</div>
+            <div style="font-size: 0.7rem; color: var(--text-muted);">Tenant Workspace</div>
+          </div>
+          <span class="tenant-code" id="sidebarCompanyCode">ACME-2026</span>
+        </div>
+      </div>
+
+      <!-- Navigation Menu -->
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Workspace</div>
+        <ul class="side-menu">
+          <li class="side-item active" id="navOverview" onclick="switchDashboardView('overview')">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+            <span>Overview</span>
+          </li>
+          <li class="side-item" id="navProjects" onclick="switchDashboardView('projects')">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" /></svg>
+            <span>Projects</span>
+          </li>
+          <li class="side-item" id="navKanban" onclick="switchDashboardView('kanban')">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>
+            <span>Kanban Board</span>
+          </li>
+          <!-- Team View is guarded by RBAC: Hidden for Employees -->
+          <li class="side-item" id="navTeam" onclick="switchDashboardView('team')">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+            <span>Team & Roles</span>
+          </li>
+        </ul>
+
+        <div class="nav-section-title" style="margin-top: 1rem;">Integrations</div>
+        <ul class="side-menu">
+          <li class="side-item" onclick="openAiAssistantModal()">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            <span style="color: var(--accent-cyan);">✨ Groq AI Assistant</span>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Sidebar Footer / Current User Profile -->
+      <div class="sidebar-footer">
+        <div class="user-profile-summary">
+          <div class="user-avatar" id="sidebarAvatar">A</div>
+          <div class="user-meta">
+            <span class="user-display-name" id="sidebarUsername">alex_admin</span>
+            <span id="sidebarRoleBadge" class="badge role-admin" style="font-size: 0.65rem; padding: 0.1rem 0.4rem; width: fit-content;">ADMIN</span>
+          </div>
+        </div>
+        <button onclick="handleLogout()" title="Log Out" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem; padding: 4px; transition: color 0.2s;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='var(--text-muted)'">
+          ⏻
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Workspace Content -->
+    <div class="main-workspace">
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h2 class="workspace-title" id="pageTitle">Workspace Overview</h2>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Global Filter / Search -->
+          <div class="search-input-wrapper">
+            <svg class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+            <input type="text" id="globalSearchInput" class="form-control" placeholder="Search tasks & projects..." oninput="filterCurrentView(this.value)">
+          </div>
+
+          <!-- Project Filter for Kanban -->
+          <select id="kanbanProjectFilter" class="form-control" style="width: 170px; display: none; height: 34px; font-size: 0.85rem;" onchange="loadTasks()">
+            <option value="">All Projects</option>
+          </select>
+
+          <!-- New Project Button (Guarded by RBAC: Hidden for Employees) -->
+          <button id="btnNewProject" class="btn btn-secondary btn-sm" onclick="openProjectModal()">
+            <span>+ New Project</span>
+          </button>
+
+          <!-- New Task Button -->
+          <button id="btnNewTask" class="btn btn-primary btn-sm" onclick="openTaskModal()">
+            <span>+ New Task</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area with Dynamic Views -->
+      <main class="content-area">
+
+        <!-- 1. OVERVIEW VIEW -->
+        <section id="viewOverview">
+          <div class="metrics-grid">
+            <div class="glass-card metric-card">
+              <div class="metric-label">Total Projects</div>
+              <div class="metric-value" id="metricTotalProjects">0</div>
+              <div class="metric-subtext">Active company workspaces</div>
+            </div>
+
+            <div class="glass-card metric-card">
+              <div class="metric-label">Active Tasks</div>
+              <div class="metric-value" style="color: var(--accent-indigo);" id="metricActiveTasks">0</div>
+              <div class="metric-subtext">To Do & In Progress</div>
+            </div>
+
+            <div class="glass-card metric-card">
+              <div class="metric-label">Completed Tasks</div>
+              <div class="metric-value" style="color: var(--accent-teal);" id="metricCompletedTasks">0</div>
+              <div class="metric-subtext">Successfully finished</div>
+            </div>
+
+            <div class="glass-card metric-card">
+              <div class="metric-label">System Health & SLA</div>
+              <div class="metric-value" style="font-size: 1.3rem; color: var(--accent-teal); display: flex; align-items: center; gap: 0.5rem; margin-top: 0.4rem;">
+                <span class="badge-dot" style="background: var(--accent-teal); width: 10px; height: 10px;"></span>
+                <span>Active 24/7</span>
+              </div>
+              <div class="metric-subtext" id="slaMonitorText">Background SLA watchdog running</div>
+            </div>
+          </div>
+
+          <!-- Quick Action Banner -->
+          <div class="glass-card" style="padding: 2rem; margin-bottom: 2rem; background: radial-gradient(circle at 10% 20%, rgba(0, 229, 153, 0.08), transparent 70%), var(--bg-card); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="margin-bottom: 0.5rem; font-size: 1.3rem;">Welcome to your high-velocity command center</h3>
+              <p style="color: var(--text-secondary); max-width: 600px; font-size: 0.9rem;">
+                Collaborate in real time across departments with strict multi-tenant isolation. Create projects, organize Kanban sprints, and leverage Groq AI for instant technical task specs.
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+              <button class="btn btn-secondary" onclick="switchDashboardView('projects')">View Projects</button>
+              <button class="btn btn-primary" onclick="switchDashboardView('kanban')">Open Kanban Board</button>
+            </div>
+          </div>
+
+          <!-- Recent Task Activity Preview -->
+          <div class="glass-card" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+              <h3 style="font-size: 1.1rem;">Recent Task Pipeline</h3>
+              <button class="btn btn-secondary btn-sm" onclick="switchDashboardView('kanban')">View All →</button>
+            </div>
+            <div id="overviewTaskList" style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. PROJECTS GRID VIEW -->
+        <section id="viewProjects" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <div>
+              <h3 style="font-size: 1.25rem;">Projects Directory</h3>
+              <p style="color: var(--text-secondary); font-size: 0.85rem;">Company workspaces with task progress metrics</p>
+            </div>
+            <button id="btnNewProjectView" class="btn btn-primary btn-sm" onclick="openProjectModal()">+ Add Project</button>
+          </div>
+
+          <div id="projectsGrid" class="projects-grid">
+            <!-- Dynamically populated by app.js -->
+          </div>
+        </section>
+
+        <!-- 3. KANBAN BOARD VIEW -->
+        <section id="viewKanban" style="display: none;">
+          <div class="kanban-board">
+            
+            <!-- Column 1: TO DO -->
+            <div class="kanban-column" id="colTodo" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'TODO')">
+              <div class="kanban-col-header">
+                <div class="col-title-group">
+                  <span class="badge-dot" style="background: #94a3b8;"></span>
+                  <span class="col-title">To Do</span>
+                </div>
+                <span class="col-count" id="countTodo">0</span>
+              </div>
+              <div class="kanban-cards-wrapper" id="cardsTodo">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Column 2: IN PROGRESS -->
+            <div class="kanban-column" id="colInProgress" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'IN_PROGRESS')">
+              <div class="kanban-col-header">
+                <div class="col-title-group">
+                  <span class="badge-dot" style="background: var(--accent-indigo);"></span>
+                  <span class="col-title">In Progress</span>
+                </div>
+                <span class="col-count" id="countInProgress">0</span>
+              </div>
+              <div class="kanban-cards-wrapper" id="cardsInProgress">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Column 3: DONE -->
+            <div class="kanban-column" id="colDone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event, 'DONE')">
+              <div class="kanban-col-header">
+                <div class="col-title-group">
+                  <span class="badge-dot" style="background: var(--accent-teal);"></span>
+                  <span class="col-title">Done</span>
+                </div>
+                <span class="col-count" id="countDone">0</span>
+              </div>
+              <div class="kanban-cards-wrapper" id="cardsDone">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- 4. TEAM & ROLES VIEW (Guarded by RBAC) -->
+        <section id="viewTeam" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <div>
+              <h3 style="font-size: 1.25rem;">Team Directory & RBAC Permissions</h3>
+              <p style="color: var(--text-secondary); font-size: 0.85rem;">Members registered under your company tenant code</p>
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">
+              Company Code: <span class="tenant-code" id="teamViewCompanyCode">...</span>
+            </div>
+          </div>
+
+          <div class="glass-card table-container">
+            <table class="team-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Joined Date</th>
+                  <th id="thActions">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="teamTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODALS
+       ========================================================================= -->
+
+  <!-- Modal 1: Create Project Modal -->
+  <div class="modal-overlay" id="projectModalOverlay">
+    <div class="glass-card modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New Project</h3>
+        <button class="modal-close-btn" onclick="closeProjectModal()">✕</button>
+      </div>
+
+      <form id="createProjectForm" onsubmit="handleCreateProjectSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="projName">Project Name</label>
+          <input type="text" id="projName" class="form-control" placeholder="e.g. NextGen Microservices Platform" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="projDescription">Description</label>
+          <textarea id="projDescription" class="form-control" placeholder="Scope, architectural objectives, and milestones..." rows="3"></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="projStartDate">Start Date</label>
+            <input type="date" id="projStartDate" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="projEndDate">End Date</label>
+            <input type="date" id="projEndDate" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSubmitProject">Create Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Create Task Modal (with Dynamic Dropdowns & AI Generator) -->
+  <div class="modal-overlay" id="taskModalOverlay">
+    <div class="glass-card modal-card" style="max-width: 640px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Create Task</h3>
+        <button class="modal-close-btn" onclick="closeTaskModal()">✕</button>
+      </div>
+
+      <form id="createTaskForm" onsubmit="handleCreateTaskSubmit(event)">
+        
+        <div class="form-group">
+          <label class="form-label" for="taskProjectSelect">Project</label>
+          <select id="taskProjectSelect" class="form-control" required>
+            <option value="">Select a project...</option>
+            <!-- Dynamically populated from projects -->
+          </select>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label class="form-label" for="taskTitleInput">Task Title</label>
+            <!-- Groq AI Trigger Button -->
+            <button type="button" class="btn btn-ai btn-sm" onclick="triggerAiGenerationForTask()">
+              <span>✨ Generate with Groq AI</span>
+            </button>
+          </div>
+          <input type="text" id="taskTitleInput" class="form-control" placeholder="e.g. Implement OAuth2 Refresh Token Rotation" required>
+        </div>
+
+        <div class="form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label class="form-label" for="taskDescInput">Description & Acceptance Criteria</label>
+            <span id="aiGeneratingSpinner" style="display: none; font-size: 0.75rem; color: var(--accent-cyan);">
+              ⚡ Groq LLaMA-3 synthesizing...
+            </span>
+          </div>
+          <textarea id="taskDescInput" class="form-control" placeholder="Detailed technical scope, checklist, and criteria..." rows="5"></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="taskAssigneeSelect">Assign To</label>
+            <select id="taskAssigneeSelect" class="form-control">
+              <option value="">Unassigned</option>
+              <!-- Dynamically populated from company users -->
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="taskPrioritySelect">Priority</label>
+            <select id="taskPrioritySelect" class="form-control">
+              <option value="LOW">Low</option>
+              <option value="MEDIUM" selected>Medium</option>
+              <option value="HIGH">High</option>
+              <option value="CRITICAL">Critical</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="form-group">
+            <label class="form-label" for="taskDueDateInput">Due Date</label>
+            <input type="date" id="taskDueDateInput" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="taskStatusSelect">Initial Status</label>
+            <select id="taskStatusSelect" class="form-control">
+              <option value="TODO" selected>To Do</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="DONE">Done</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeTaskModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="btnSubmitTask">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Standalone Groq AI Assistant Modal -->
+  <div class="modal-overlay" id="aiModalOverlay">
+    <div class="glass-card modal-card" style="max-width: 600px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="font-size: 1.3rem;">✨</span>
+          <h3 class="modal-title">Groq AI Task Synthesizer</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeAiAssistantModal()">✕</button>
+      </div>
+
+      <div>
+        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.25rem;">
+          Leverage Groq's high-speed LLaMA-3 model to draft production-grade technical task specifications, acceptance criteria, and subtasks.
+        </p>
+
+        <div class="form-group">
+          <label class="form-label" for="aiPromptTitle">Task Title or Feature Idea</label>
+          <input type="text" id="aiPromptTitle" class="form-control" placeholder="e.g. Set up Kafka Change Data Capture with Debezium">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="aiPromptContext">Optional Extra Context / Requirements</label>
+          <textarea id="aiPromptContext" class="form-control" placeholder="e.g. Must handle 50,000 writes/sec and ensure exactly-once semantics" rows="3"></textarea>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <button type="button" class="btn btn-ai" style="width: 100%;" id="btnRunAiSynthesizer" onclick="runStandaloneAiSynthesis()">
+            <span>⚡ Generate Specification</span>
+          </button>
+        </div>
+
+        <div class="form-group" id="aiOutputGroup" style="display: none;">
+          <label class="form-label">Generated Specification (Markdown)</label>
+          <textarea id="aiOutputArea" class="form-control" rows="6" readonly style="font-family: var(--font-mono); font-size: 0.8rem;"></textarea>
+          <button type="button" class="btn btn-secondary btn-sm" style="margin-top: 0.5rem; align-self: flex-start;" onclick="copyAiOutputToTaskModal()">
+            <span>Copy to New Task Modal →</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Application Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
